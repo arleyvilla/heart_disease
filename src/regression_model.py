@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
+import statsmodels.api as sm
+
 import joblib # Este módulo se utiliza para guardar el modelo entrenado
 
 def train_regression_model(df, target='thalach'):
@@ -18,10 +20,17 @@ def train_regression_model(df, target='thalach'):
     # División de datos
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Entrenamiento
+    # Entrenamiento modelo utilizando LinearRegression() (scikit-learn)
     model = LinearRegression()
     model.fit(X_train, y_train)
 
+    #modelo utilizando en OLS()
+    #X_train = sm.add_constant(X_train, prepend=True)
+    #model = sm.OLS(endog=y_train, exog=X_train,)
+    #model = model.fit()
+    #print(model.summary())
+
+    
     # Predicciones
     y_pred = model.predict(X_test)
 
