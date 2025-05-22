@@ -1,0 +1,36 @@
+# OBTENER DATASET MAIN()
+from ucimlrepo import fetch_ucirepo
+import pandas as pd
+
+# Cargar el dataset
+heart_disease = fetch_ucirepo(name='Heart Disease')
+
+# Convertir a DataFrame
+X = heart_disease.data.features
+y = heart_disease.data.targets
+
+# Unir ambos para una vista completa
+df = pd.concat([X, y], axis=1)
+
+# Guardar los datos como CSV
+df.to_csv('./data/heart_disease_raw.csv', index=False)
+
+# Mostrar las primeras filas
+print(df.head())
+
+
+# GENERAR DATASET LIMPIO
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from preprocess import clean_heart_data
+
+# Cargar datos
+df = pd.read_csv('./data/heart_disease_raw.csv')
+
+# Limpiar datos
+df_clean = clean_heart_data(df)
+
+# Guardar versión limpia
+df_clean.to_csv('./data/heart_disease_clean.csv', index=False)
+
